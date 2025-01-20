@@ -1,6 +1,6 @@
 #include "SBML_reaction.h"
-#include <cstdlib>
 #include <cstring>
+#include <string>
 
 bool SBML::reaction::read(rapidxml::xml_node<>* node, parameter* param, species* spe, gene* gene_list) {
 	rapidxml::xml_node<>* reaction_node = node->first_node();
@@ -42,7 +42,7 @@ bool SBML::reaction::read(rapidxml::xml_node<>* node, parameter* param, species*
 				reactant_attr = reactant_node->first_attribute("stoichiometry");
 				if (!reactant_attr) { return false; }
 				
-				entry.m_reactant.push_back({ itr->second, atoi(reactant_attr->value()) });
+				entry.m_reactant.push_back({ itr->second, std::stod(reactant_attr->value()) });
 				reactant_node = reactant_node->next_sibling();
 			}
 		}
@@ -59,7 +59,7 @@ bool SBML::reaction::read(rapidxml::xml_node<>* node, parameter* param, species*
 				product_attr = product_node->first_attribute("stoichiometry");
 				if (!product_attr) { return false; }
 				
-				entry.m_product.push_back({ itr->second, atoi(product_attr->value()) });
+				entry.m_product.push_back({ itr->second, std::stod(product_attr->value()) });
 				product_node = product_node->next_sibling();
 			}
 		}

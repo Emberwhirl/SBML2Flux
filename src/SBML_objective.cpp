@@ -1,5 +1,6 @@
 #include "SBML_objective.h"
 #include <cstdlib>
+#include <string>
 
 bool SBML::objective::read(rapidxml::xml_node<>* node, reaction* react) {
 	rapidxml::xml_node<>* obj_node = node->first_node("fbc:objective");
@@ -16,7 +17,7 @@ bool SBML::objective::read(rapidxml::xml_node<>* node, reaction* react) {
 			auto coef_attr = flux_node->first_attribute("fbc:coefficient");
 			if (!coef_attr) { return false; }
 
-			m_objective.push_back({ itr->second, atoi(coef_attr->value()) });
+			m_objective.push_back({ itr->second, std::stod(coef_attr->value()) });
 
 			flux_node = flux_node->next_sibling();
 		}

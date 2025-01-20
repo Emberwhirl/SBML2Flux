@@ -56,7 +56,7 @@ int work(config* conf) {
 	try_doing(writer.write_association(out_root / "iso.txt", out_root / "multi_comp.txt", out_root / "simple_comp.txt"));
 
 	std::cerr << "Writing reactions ... ";
-	try_doing(writer.write_reaction(out_root / "S.txt", out_root / "annotation.txt"));
+	try_doing(writer.write_reaction(out_root / "S.txt", out_root / "annotation.txt", out_root / "lookup.txt"));
 
 	std::cerr << "Writing gene list ... ";
 	try_doing(writer.write_gene(out_root / "gene_list.txt"));
@@ -84,9 +84,9 @@ void help() {
 		"\n"
 		"Usage\n"
 		"\n"
-		"SBML2Flux <model_file> -O <output_directory>\n"
+		"SBML2Flux <model_file.xml> -O <output_directory>\n"
 		"\n"
-		"    <model_file>: Path to the SBML model file from Metabolic Atlas.\n"
+		"    <model_file.xml>: Path to the SBML model file from Metabolic Atlas.\n"
 		"\n"
 		"    -O, --out-dir <output_directory>: Path to the directory where output files\n"
 		"    will be saved.\n"
@@ -118,6 +118,9 @@ void help() {
 		"    etc.\n"
 		"\n"
 		"    gene_list.txt: Gene list.\n"
+		"\n"
+		"    lookup.txt: a file contains all Exchange/demand reactions, which is designed\n"
+		"    to construct the medium file for METAFlux. \n"
 		"\n"
 		"    builder.R: R script for model construction.\n" << std::endl;
 }

@@ -9,6 +9,6 @@
 namespace SBML {
 	struct objective {
 		bool read(rapidxml::xml_node<>* node, reaction* react);
-		std::vector<std::pair<size_t, int>> m_objective;
+		std::vector<std::pair<size_t, double>> m_objective;
 	};
 }

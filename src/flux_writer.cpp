@@ -32,11 +32,13 @@ bool flux_writer::write_association(const std::filesystem::path& iso, const std:
 	return true;
 }
 
-bool flux_writer::write_reaction(const std::filesystem::path& stoichiometry, const std::filesystem::path& annotation) {
-	std::ofstream ofs_S, ofs_ann;
+bool flux_writer::write_reaction(const std::filesystem::path& stoichiometry, const std::filesystem::path& annotation, const std::filesystem::path& lookup) {
+	std::ofstream ofs_S, ofs_ann, ofs_lookup;
 	ofs_S.open(stoichiometry, std::ios::out); if (!ofs_S.is_open()) { return false; }
 	ofs_ann.open(annotation, std::ios::out); if (!ofs_ann.is_open()) { return false; }
+	ofs_lookup.open(lookup, std::ios::out); if (!ofs_lookup.is_open()) { return false; }
 	ofs_ann << "LB\tUB\tObj\tReaction\tpathway\trev\n";
+	ofs_lookup << "ID\tNAME\tMETABOLITE\n";
 
 	std::vector<int> objective(m_GEM->m_reaction.m_entries.size(), 0);
 	for (const auto& i : m_GEM->m_objective.m_objective) {
@@ -53,12 +55,26 @@ bool flux_writer::write_reaction(const std::filesystem::path& stoichiometry, con
 			ofs_S << j.first << "\t" << entries[i].m_index << "\t" << j.second << "\n";
 		}
 		
+		auto& pathway_name = m_GEM->m_pathway.m_name[m_GEM->m_pathway.m_map[i]];
 		ofs_ann << entries[i].m_lower_bound << "\t"
 			<< entries[i].m_upper_bound << "\t"
 			<< objective[i] << "\t"
 			<< entries[i].m_id << "\t\""
-			<< m_GEM->m_pathway.m_name[m_GEM->m_pathway.m_map[i]] << "\"\t"
+			<< pathway_name << "\"\t"
 			<< (entries[i].m_reversible ? 1 : 0) << "\n";
+
+		if (pathway_name == "Exchange/demand reactions") {
+			for (const auto& j : entries[i].m_reactant) {
+				ofs_lookup << entries[i].m_id << "\t"
+					<< entries[i].m_name << "\t"
+					<< m_GEM->m_species.m_name[j.first] << "\n";
+			}
+			for (const auto& j : entries[i].m_product) {
+				ofs_lookup << entries[i].m_id << "\t"
+					<< entries[i].m_name << "\t"
+					<< m_GEM->m_species.m_name[j.first] << "\n";
+			}
+		}
 	}
 	return true;
 }

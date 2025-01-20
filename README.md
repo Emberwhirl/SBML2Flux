@@ -47,6 +47,8 @@ SBML2Flux <model_file>
 	* `annotation.txt`: Reaction metadata
 + Gene list:
 	* `gene_list.txt`
++ Medium:
+	* lookup.txt`: A file contains all Exchange/demand reactions, which is designed to construct the medium file for METAFlux. 
 + Model construction script
 	* `builder.R`
 

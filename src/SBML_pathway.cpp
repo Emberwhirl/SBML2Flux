@@ -8,8 +8,10 @@ bool SBML::pathway::read(rapidxml::xml_node<>* node, reaction* react) {
 	while (group_node) {
 		auto name_attr = group_node->first_attribute("groups:name");
 		if (!name_attr) { return false; }
-		m_name.push_back(name_attr->value());
+		std::string name = name_attr->value();
+		m_name.push_back(name);
 		size_t name_index = m_name.size() - 1;
+		m_index.emplace(name, name_index);
 		auto member_list_node = group_node->first_node("groups:listOfMembers");
 		if (!member_list_node) { return false; }
 		auto member_node = member_list_node->first_node();

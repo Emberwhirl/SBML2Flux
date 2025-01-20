@@ -7,6 +7,6 @@
 namespace SBML {
 	struct parameter {
 		bool read(rapidxml::xml_node<>* node);
-		std::map<std::string, int> m_param;
+		std::map<std::string, double> m_param;
 	};
 }

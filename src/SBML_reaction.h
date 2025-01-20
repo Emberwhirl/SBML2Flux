@@ -13,10 +13,10 @@
 
 namespace SBML {
 	struct reaction_entry {
-		int m_lower_bound;
-		int m_upper_bound;
-		std::vector<std::pair<size_t, int>> m_reactant;
-		std::vector<std::pair<size_t, int>> m_product;
+		double m_lower_bound;
+		double m_upper_bound;
+		std::vector<std::pair<size_t, double>> m_reactant;
+		std::vector<std::pair<size_t, double>> m_product;
 		bool m_reversible;
 		std::string m_id;
 		size_t m_index;
