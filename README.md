@@ -109,7 +109,15 @@ SBML2Flux <model_file.xml>
     source("optimization.R")
     ```
 
+<<<<<<< HEAD
 	* Replace the `calculate_multi_comp`, `calculate_reaction_score` and `compute_flux` functions with the provided custom implementations.
+=======
+<<<<<<< HEAD
+	* Replace the `calculate_multi_comp`, `calculate_reaction_score` and `compute_flux` functions with the provided custom implementations.
+=======
+	* Replace the `calculate_multi_comp` and `calculate_reaction_score` functions with the provided custom implementations to handle complex gene associations and reaction scoring.
+>>>>>>> 32926eb9e3ff8e0ea020078ccf1d075df51ec9ab
+>>>>>>> 833a9bcf9e6e76f0e4be45f37abb8e4baae8b16a
 
     ```R
     # This code snippet is adapted from the METAFlux project (https://github.com/KChen-lab/METAFlux),
